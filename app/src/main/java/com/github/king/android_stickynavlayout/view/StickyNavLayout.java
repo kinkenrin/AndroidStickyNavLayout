@@ -21,31 +21,32 @@ import com.github.king.android_stickynavlayout.R;
 
 public class StickyNavLayout extends LinearLayout implements NestedScrollingParent {
     private static final String TAG = "StickyNavLayout";
+    private OnScrollChangeListener mOnScrollChangeListener;
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        Log.e(TAG, "onStartNestedScroll");
+//        Log.e(TAG, "onStartNestedScroll");
         return true;
     }
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes) {
-        Log.e(TAG, "onNestedScrollAccepted");
+//        Log.e(TAG, "onNestedScrollAccepted");
     }
 
     @Override
     public void onStopNestedScroll(View target) {
-        Log.e(TAG, "onStopNestedScroll");
+//        Log.e(TAG, "onStopNestedScroll");
     }
 
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        Log.e(TAG, "onNestedScroll");
+//        Log.e(TAG, "onNestedScroll");
     }
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
-        Log.e(TAG, "onNestedPreScroll");
+//        Log.e(TAG, "onNestedPreScroll");
         boolean hiddenTop = dy > 0 && getScrollY() < mTopViewHeight;
         boolean showTop = dy < 0 && getScrollY() >= 0 && !ViewCompat.canScrollVertically(target, -1);
 
@@ -84,7 +85,7 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
 
     @Override
     public int getNestedScrollAxes() {
-        Log.e(TAG, "getNestedScrollAxes");
+//        Log.e(TAG, "getNestedScrollAxes");
         return 0;
     }
 
@@ -301,5 +302,39 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
         }
     }
 
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (mOnScrollChangeListener != null) {
+            float percent = (float) getScrollY() / mTopViewHeight;
+            mOnScrollChangeListener.onScrollChangeByPercent(this, percent);
+            mOnScrollChangeListener.onScrollChange(this, l, t, oldl, oldt);
+        }
+    }
 
+    public void setOnScrollChangeListener(OnScrollChangeListener l) {
+        mOnScrollChangeListener = l;
+    }
+
+
+    public interface OnScrollChangeListener {
+        /**
+         * Called when the scroll position of a view changes.
+         *
+         * @param v          The view whose scroll position has changed.
+         * @param scrollX    Current horizontal scroll origin.
+         * @param scrollY    Current vertical scroll origin.
+         * @param oldScrollX Previous horizontal scroll origin.
+         * @param oldScrollY Previous vertical scroll origin.
+         */
+        void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY);
+
+        /**
+         * Called when the scroll position of a view changes.
+         *
+         * @param v       The view whose scroll position has changed.
+         * @param percent Current scroll percent.
+         */
+        void onScrollChangeByPercent(View v, float percent);
+    }
 }

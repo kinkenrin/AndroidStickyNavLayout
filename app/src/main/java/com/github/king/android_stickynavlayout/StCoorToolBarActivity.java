@@ -2,6 +2,7 @@ package com.github.king.android_stickynavlayout;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.github.king.android_stickynavlayout.view.SimpleViewPagerIndicator;
+import com.github.king.android_stickynavlayout.view.StickyNavLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StCoorToolBarActivity extends AppCompatActivity {
 
-    private LinearLayout mIndicator;
+    private StickyNavLayout mSnl_container;
+    private TextView mTv_title;
+    private TabLayout mIndicator;
     private ViewPager mViewPager;
 
     @Override
@@ -28,9 +32,10 @@ public class StCoorToolBarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pager);
 
-
-        mIndicator =  findViewById(R.id.id_stickynavlayout_indicator);
-        mViewPager = (ViewPager) findViewById(R.id.id_stickynavlayout_viewpager);
+        mSnl_container = findViewById(R.id.snl_container);
+        mTv_title = findViewById(R.id.tv_title);
+        mIndicator = findViewById(R.id.id_stickynavlayout_indicator);
+        mViewPager = findViewById(R.id.id_stickynavlayout_viewpager);
 
         List<String> tabNameList = new ArrayList<>();
         tabNameList.add("页面一");
@@ -41,6 +46,19 @@ public class StCoorToolBarActivity extends AppCompatActivity {
         BaseViewPageAdapter adapter = new BaseViewPageAdapter
                 (getApplicationContext(), getSupportFragmentManager(), tabNameList, fragmentList);
         mViewPager.setAdapter(adapter);
+        mIndicator.setupWithViewPager(mViewPager);
+
+        mSnl_container.setOnScrollChangeListener(new StickyNavLayout.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+            }
+
+            @Override
+            public void onScrollChangeByPercent(View v, float percent) {
+                mTv_title.setAlpha(percent);
+            }
+        });
 
     }
 
@@ -50,10 +68,11 @@ public class StCoorToolBarActivity extends AppCompatActivity {
         private CommonRecyclerAdapter<String> mAdapter;
         private List<String> mStringList;
         private ViewPager mVp_pager;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View view = View.inflate(getContext(),R.layout.layout_pager1, null);
+            View view = View.inflate(getContext(), R.layout.layout_pager1, null);
 
             return view;
         }

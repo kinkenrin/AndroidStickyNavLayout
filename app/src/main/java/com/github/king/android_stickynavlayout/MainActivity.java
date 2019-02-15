@@ -20,31 +20,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SimpleViewPagerIndicator mIndicator;
-    private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-//        mIndicator = (SimpleViewPagerIndicator) findViewById(R.id.id_stickynavlayout_indicator);
-//        mViewPager = (ViewPager) findViewById(R.id.id_stickynavlayout_viewpager);
-
-        /*List<String> tabNameList = new ArrayList<>();
-        tabNameList.add("页面一");
-        tabNameList.add("页面二");
-        List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new Pager1());
-        fragmentList.add(new Pager1());
-        BaseViewPageAdapter adapter = new BaseViewPageAdapter
-                (getApplicationContext(), getSupportFragmentManager(), tabNameList, fragmentList);
-        mViewPager.setAdapter(adapter);*/
-
     }
 
-    public void btnClick4(View view) {
+    public void btnClick(View view) {
         startActivity(new Intent(this, StCoorToolBarActivity.class));
     }
 }
