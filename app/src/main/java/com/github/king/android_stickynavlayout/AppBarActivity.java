@@ -72,12 +72,9 @@ public class AppBarActivity extends AppCompatActivity {
             v_tags2 = rootView.findViewById(R.id.v_tags2);
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                private int scrollState;
-                private int deltaY;
 
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                    scrollState = newState;
                 }
 
                 @Override
