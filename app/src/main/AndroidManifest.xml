@@ -20,6 +20,11 @@
         <activity
             android:name=".StCoorToolBarActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".AppBarActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
