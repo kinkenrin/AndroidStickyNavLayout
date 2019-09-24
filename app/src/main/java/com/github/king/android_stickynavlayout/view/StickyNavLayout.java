@@ -26,7 +26,7 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
 //        Log.e(TAG, "onStartNestedScroll");
-        return true;
+        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
     }
 
     @Override
@@ -266,7 +266,7 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
         ViewGroup.LayoutParams params = mViewPager.getLayoutParams();
         params.height = getMeasuredHeight() - mNav.getMeasuredHeight();
         setMeasuredDimension(getMeasuredWidth(), mTop.getMeasuredHeight() + mNav.getMeasuredHeight() + mViewPager.getMeasuredHeight());
-        measureChildren(widthMeasureSpec,heightMeasureSpec);
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
